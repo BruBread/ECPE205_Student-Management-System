@@ -114,60 +114,73 @@ public class EditStudentPanel extends JPanel {
   }
 
   private void updateStudent() {
-    int row = table.getSelectedRow();
-    if (row < 0) {
-      JOptionPane.showMessageDialog(this, "Select a student to update.", "Info", JOptionPane.INFORMATION_MESSAGE);
-      return;
+      int row = table.getSelectedRow();
+      if (row < 0) {
+          JOptionPane.showMessageDialog(this, "Select a student to update.", "Info", JOptionPane.INFORMATION_MESSAGE);
+          return;
+      }
+
+      String id = idField.getText().trim();
+      String name = nameField.getText().trim();
+      String ageText = ageField.getText().trim();
+
+      if (name.isEmpty() || ageText.isEmpty()) {
+          JOptionPane.showMessageDialog(this, "Fields cannot be empty.", "Validation Error", JOptionPane.WARNING_MESSAGE);
+          return;
+      }
+
+      int age;
+      try {
+          age = Integer.parseInt(ageText);
+          if (age <= 0) throw new NumberFormatException();
+      } catch (NumberFormatException ex) {
+          JOptionPane.showMessageDialog(this, "Age must be a valid number.", "Validation Error",
+                  JOptionPane.WARNING_MESSAGE);
+          return;
+      }
+
+      Student student = DataStore.getInstance().findById(id);
+      if (student != null) {
+          student.setName(name);
+          student.setAge(age);
+          JOptionPane.showMessageDialog(this, "Student updated.", "Success", JOptionPane.INFORMATION_MESSAGE);
+          loadData();
+          selectStudentById(id);
+        }
     }
 
-    String id = idField.getText().trim();
-    String name = nameField.getText().trim();
-    String ageText = ageField.getText().trim();
+    private void deleteStudent() {
+        int row = table.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "Select a student to delete.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
 
-    if (name.isEmpty() || ageText.isEmpty()) {
-      JOptionPane.showMessageDialog(this, "Fields cannot be empty.", "Validation Error", JOptionPane.WARNING_MESSAGE);
-      return;
+        String id = idField.getText().trim();
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Are you sure you want to delete this student?",
+                "Confirm Delete", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            List<Student> students = DataStore.getInstance().getAllStudents();
+            Student toRemove = DataStore.getInstance().findById(id);
+            if (toRemove != null) {
+                students.remove(toRemove);
+                JOptionPane.showMessageDialog(this, "Student deleted.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                loadData();
+            }
+        }
     }
 
-    int age;
-    try {
-      age = Integer.parseInt(ageText);
-      if (age <= 0) throw new NumberFormatException();
-    } catch (NumberFormatException ex) {
-      JOptionPane.showMessageDialog(this, "Age must be a valid number.", "Validation Error",
-          JOptionPane.WARNING_MESSAGE);
-      return;
+    private void selectStudentById(String id) {
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            if (tableModel.getValueAt(i, 0).equals(id)) {
+                table.setRowSelectionInterval(i, i);
+                populateFields();
+                break;
+            }
+        }
     }
-
-    Student student = DataStore.getInstance().findById(id);
-
-
-    student.setName(name);
-    student.setAge(age);
-
-    JOptionPane.showMessageDialog(this, "Student updated.", "Success", JOptionPane.INFORMATION_MESSAGE);
-    loadData();
-  }
-
-  //
-
-  private void deleteStudent() {
-    int row = table.getSelectedRow();
-    if (row < 0) {
-      JOptionPane.showMessageDialog(this, "Select a student to delete.", "Info", JOptionPane.INFORMATION_MESSAGE);
-      return;
-    }
-
-    int confirm = JOptionPane.showConfirmDialog(this,
-        "Are you sure you want to delete this student?",
-        "Confirm Delete", JOptionPane.YES_NO_OPTION);
-
-    if (confirm == JOptionPane.YES_OPTION) {
-      DataStore.getInstance().removeStudent(row);
-      JOptionPane.showMessageDialog(this, "Student deleted.", "Success", JOptionPane.INFORMATION_MESSAGE);
-      loadData();
-    }
-  }
 
   private void clearFields() {
     idField.setText("");
