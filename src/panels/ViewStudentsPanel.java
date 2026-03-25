@@ -24,6 +24,7 @@ import java.util.List;
 public class ViewStudentsPanel extends JPanel {
   private DefaultTableModel tableModel;
   private JTable table;
+  //
 
   public ViewStudentsPanel() {
     setLayout(new BorderLayout());
