@@ -25,7 +25,7 @@ import java.util.List;
 public class EditStudentPanel extends JPanel {
   private DefaultTableModel tableModel;
   private JTable table;
-  private JTextField idField, nameField, ageField;
+    private JTextField idField, nameField, ageField, emailField, courseField, yearLvlField, contactField;
 
   public EditStudentPanel() {
     setLayout(new BorderLayout());
@@ -77,19 +77,36 @@ public class EditStudentPanel extends JPanel {
     JPanel bottomPanel = new JPanel(new BorderLayout());
     bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 15, 20));
 
-    JPanel formPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
-    formPanel.add(new JLabel("ID:"));
-    idField = new JTextField(10);
-    idField.setEditable(false); // ID should not be changed
-    formPanel.add(idField);
+      JPanel formPanel = new JPanel(new GridLayout(4, 4, 10, 5));
 
-    formPanel.add(new JLabel("Name:"));
-    nameField = new JTextField(15);
-    formPanel.add(nameField);
+      formPanel.add(new JLabel("ID:"));
+      idField = new JTextField(10);
+      idField.setEditable(false);
+      formPanel.add(idField);
 
-    formPanel.add(new JLabel("Age:"));
-    ageField = new JTextField(5);
-    formPanel.add(ageField);
+      formPanel.add(new JLabel("Name:"));
+      nameField = new JTextField(15);
+      formPanel.add(nameField);
+
+      formPanel.add(new JLabel("Age:"));
+      ageField = new JTextField(5);
+      formPanel.add(ageField);
+
+      formPanel.add(new JLabel("Email:"));
+      emailField = new JTextField(20);
+      formPanel.add(emailField);
+
+      formPanel.add(new JLabel("Course:"));
+      courseField = new JTextField(15);
+      formPanel.add(courseField);
+
+      formPanel.add(new JLabel("Year Level:"));
+      yearLvlField = new JTextField(5);
+      formPanel.add(yearLvlField);
+
+      formPanel.add(new JLabel("Contact:"));
+      contactField = new JTextField(15);
+      formPanel.add(contactField);
 
     bottomPanel.add(formPanel, BorderLayout.CENTER);
 
@@ -130,48 +147,69 @@ public class EditStudentPanel extends JPanel {
     clearFields();
   }
 
-  private void populateFields() {
-    int row = table.getSelectedRow();
-    if (row >= 0) {
-      idField.setText(tableModel.getValueAt(row, 0).toString());
-      nameField.setText(tableModel.getValueAt(row, 1).toString());
-      ageField.setText(tableModel.getValueAt(row, 2).toString());
+    private void populateFields() {
+        int row = table.getSelectedRow();
+        if (row >= 0) {
+            idField.setText(tableModel.getValueAt(row, 0).toString());
+            nameField.setText(tableModel.getValueAt(row, 1).toString());
+            ageField.setText(tableModel.getValueAt(row, 2).toString());
+            emailField.setText(tableModel.getValueAt(row, 3).toString());
+            courseField.setText(tableModel.getValueAt(row, 4).toString());
+            yearLvlField.setText(tableModel.getValueAt(row, 5).toString());
+            contactField.setText(tableModel.getValueAt(row, 6).toString());
+        }
     }
-  }
 
-  private void updateStudent() {
-      int row = table.getSelectedRow();
-      if (row < 0) {
-          JOptionPane.showMessageDialog(this, "Select a student to update.", "Info", JOptionPane.INFORMATION_MESSAGE);
-          return;
-      }
+    private void updateStudent() {
+        int row = table.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "Select a student to update.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
 
-      String id = idField.getText().trim();
-      String name = nameField.getText().trim();
-      String ageText = ageField.getText().trim();
+        String id = idField.getText().trim();
+        String name = nameField.getText().trim();
+        String ageText = ageField.getText().trim();
+        String email = emailField.getText().trim();
+        String course = courseField.getText().trim();
+        String yearLvlText = yearLvlField.getText().trim();
+        String contact = contactField.getText().trim();
 
-      if (name.isEmpty() || ageText.isEmpty()) {
-          JOptionPane.showMessageDialog(this, "Fields cannot be empty.", "Validation Error", JOptionPane.WARNING_MESSAGE);
-          return;
-      }
+        if (name.isEmpty() || ageText.isEmpty() || email.isEmpty() || course.isEmpty()
+                || yearLvlText.isEmpty() || contact.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Fields cannot be empty.", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-      int age;
-      try {
-          age = Integer.parseInt(ageText);
-          if (age <= 0) throw new NumberFormatException();
-      } catch (NumberFormatException ex) {
-          JOptionPane.showMessageDialog(this, "Age must be a valid number.", "Validation Error",
-                  JOptionPane.WARNING_MESSAGE);
-          return;
-      }
+        int age;
+        try {
+            age = Integer.parseInt(ageText);
+            if (age <= 0) throw new NumberFormatException();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Age must be a valid number.", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-      Student student = DataStore.getInstance().findById(id);
-      if (student != null) {
-          student.setName(name);
-          student.setAge(age);
-          JOptionPane.showMessageDialog(this, "Student updated.", "Success", JOptionPane.INFORMATION_MESSAGE);
-          loadData();
-          selectStudentById(id);
+        int yearLvl;
+        try {
+            yearLvl = Integer.parseInt(yearLvlText);
+            if (yearLvl <= 0) throw new NumberFormatException();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Year Level must be a valid number.", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Student student = DataStore.getInstance().findById(id);
+        if (student != null) {
+            student.setName(name);
+            student.setAge(age);
+            student.setEmail(email);
+            student.setCourse(course);
+            student.setYearLvl(yearLvl);
+            student.setContactNum(contact);
+            JOptionPane.showMessageDialog(this, "Student updated.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            loadData();
+            selectStudentById(id);
         }
     }
 
@@ -208,10 +246,14 @@ public class EditStudentPanel extends JPanel {
         }
     }
 
-  private void clearFields() {
-    idField.setText("");
-    nameField.setText("");
-    ageField.setText("");
-  }
+    private void clearFields() {
+        idField.setText("");
+        nameField.setText("");
+        ageField.setText("");
+        emailField.setText("");
+        courseField.setText("");
+        yearLvlField.setText("");
+        contactField.setText("");
+    }
 }
 
