@@ -15,11 +15,17 @@ public class Student {
   private String id;
   private String name;
   private int age;
+  private String email, course, contactNum;
+  private int yearLvl;
 
-  public Student(String id, String name, int age) {
+  public Student(String id, String name, int age, String email, String course, int yearLvl, String contactNum) {
     this.id = id;
     this.name = name;
     this.age = age;
+    this.email = email;
+    this.course = course;
+    this.yearLvl = yearLvl;
+    this.contactNum = contactNum;
   }
 
   // --- Getters ---
@@ -48,7 +54,39 @@ public class Student {
     this.age = age;
   }
 
-  @Override
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    public int getYearLvl() {
+        return yearLvl;
+    }
+
+    public void setYearLvl(int yearLvl) {
+        this.yearLvl = yearLvl;
+    }
+
+    public String getContactNum() {
+        return contactNum;
+    }
+
+    public void setContactNum(String contactNum) {
+        this.contactNum = contactNum;
+    }
+
+    @Override
   public String toString() {
     return id + " - " + name + " (Age: " + age + ")";
   }

@@ -21,9 +21,9 @@ public class DataStore {
   private DataStore() {
     students = new ArrayList<>();
     // Pre-load some sample data for testing
-    students.add(new Student("2024-0001", "Juan Dela Cruz", 20));
-    students.add(new Student("2024-0002", "Maria Santos", 19));
-    students.add(new Student("2024-0003", "Jose Rizal", 21));
+    students.add(new Student("2024-0001", "Juan Dela Cruz", 20, "juandelacruz@gmail.com", "ENCE", 1, "092456124"));
+    students.add(new Student("2024-0002", "Maria Santos", 19, "mariasantos@gmail.com", "ENCE", 2, "092455123"));
+    students.add(new Student("2024-0003", "Jose Rizal", 21, "joserizal@gmail.com", "ENCE", 4, "092456412"));
   }
 
   /** Get the singleton instance */
