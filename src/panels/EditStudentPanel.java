@@ -149,6 +149,8 @@ public class EditStudentPanel extends JPanel {
     loadData();
   }
 
+  //
+
   private void deleteStudent() {
     int row = table.getSelectedRow();
     if (row < 0) {
