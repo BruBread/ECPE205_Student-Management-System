@@ -95,6 +95,6 @@ public class Student {
    * Returns student data as an Object array, useful for JTable rows.
    */
   public Object[] toTableRow() {
-    return new Object[] { id, name, age };
+    return new Object[] { id, name, age , email, course , yearLvl, contactNum };
   }
 }
