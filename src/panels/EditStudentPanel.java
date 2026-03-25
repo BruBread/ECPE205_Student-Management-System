@@ -5,6 +5,7 @@ import model.Student;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.util.List;
 
@@ -43,7 +44,23 @@ public class EditStudentPanel extends JPanel {
         return false;
       }
     };
-    table = new JTable(tableModel);
+    table = new JTable(tableModel) {
+        @Override
+        public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+            Component c = super.prepareRenderer(renderer, row, column);
+
+            if (isRowSelected(row)) {
+
+                c.setBackground(getSelectionBackground());
+            } else if (row % 2 == 0) {
+                c.setBackground(new Color(180, 217, 200));
+            } else {
+                c.setBackground(Color.WHITE);
+            }
+
+            return c;
+        }
+    };
     table.setRowHeight(25);
     table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     table.getSelectionModel().addListSelectionListener(e -> {

@@ -55,9 +55,9 @@ public class ViewStudentsPanel extends JPanel {
 
                   c.setBackground(getSelectionBackground());
               } else if (row % 2 == 0) {
-                  c.setBackground(Color.WHITE);
-              } else {
                   c.setBackground(new Color(180, 217, 200));
+              } else {
+                  c.setBackground(Color.WHITE);
               }
 
               return c;
