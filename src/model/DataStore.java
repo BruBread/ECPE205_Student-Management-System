@@ -41,6 +41,16 @@ public class DataStore {
     students.add(student);
   }
 
+  public Student searchByName(String name){
+      for(Student x : students){
+          String str = name.trim();
+          if(str.equals(x.getName())){
+              return x;
+          }
+      }
+      return null;
+  }
+
   /** Remove a student by index */
   public void removeStudent(int index) {
     if (index >= 0 && index < students.size()) {
@@ -61,5 +71,14 @@ public class DataStore {
   /** Get total number of students */
   public int getCount() {
     return students.size();
+  }
+  public Student updateStudent(String id){
+      for (Student s : students){
+          if(s.getId().equals(id)){
+              return s;
+          }
+      }
+      return null;
+
   }
 }
