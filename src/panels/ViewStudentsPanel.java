@@ -5,6 +5,7 @@ import model.Student;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.util.List;
 
@@ -36,16 +37,20 @@ public class ViewStudentsPanel extends JPanel {
     add(title, BorderLayout.NORTH);
 
     // Table
-    String[] columns = { "Student ID", "Name", "Age" };
+      String[] columns = { "Student ID", "Name", "Age", "Email", "Course", "Year Level", "Contact" };
     tableModel = new DefaultTableModel(columns, 0) {
       @Override
       public boolean isCellEditable(int row, int column) {
         return false; // Read-only table
       }
+
+
+
     };
     table = new JTable(tableModel);
     table.setRowHeight(25);
     table.getTableHeader().setReorderingAllowed(false);
+    table.setAutoCreateRowSorter(true);
 
     JScrollPane scrollPane = new JScrollPane(table);
     scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
@@ -66,8 +71,22 @@ public class ViewStudentsPanel extends JPanel {
   private void loadData() {
     tableModel.setRowCount(0); // Clear table
     List<Student> students = DataStore.getInstance().getAllStudents();
+
+    if (students.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No records found.", "Info", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
     for (Student s : students) {
-      tableModel.addRow(s.toTableRow());
+      tableModel.addRow(new Object[] {
+              s.getId(),
+              s.getName(),
+              s.getAge(),
+              s.getEmail(),
+              s.getCourse(),
+              s.getYearLvl(),
+              s.getContactNum()
+      });
     }
   }
 }

@@ -120,6 +120,7 @@ public class EditStudentPanel extends JPanel {
       return;
     }
 
+    String id = idField.getText().trim();
     String name = nameField.getText().trim();
     String ageText = ageField.getText().trim();
 
@@ -131,13 +132,16 @@ public class EditStudentPanel extends JPanel {
     int age;
     try {
       age = Integer.parseInt(ageText);
+      if (age <= 0) throw new NumberFormatException();
     } catch (NumberFormatException ex) {
       JOptionPane.showMessageDialog(this, "Age must be a valid number.", "Validation Error",
           JOptionPane.WARNING_MESSAGE);
       return;
     }
 
-    Student student = DataStore.getInstance().getAllStudents().get(row);
+    Student student = DataStore.getInstance().findById(id);
+
+
     student.setName(name);
     student.setAge(age);
 
