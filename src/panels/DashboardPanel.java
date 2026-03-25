@@ -73,6 +73,8 @@ public class DashboardPanel extends JPanel {
 
   private void refreshData() {
     countLabel.setText("Total Students: " + DataStore.getInstance().getCount());
+    averageLabel.setText("Average Age: " + averageData());
+
   }
   private int averageData(){
       ArrayList<Student> students;
