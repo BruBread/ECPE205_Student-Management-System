@@ -171,7 +171,7 @@ public class EditStudentPanel extends JPanel {
             }
         }
     }
-
+//ty
     private void selectStudentById(String id) {
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             if (tableModel.getValueAt(i, 0).equals(id)) {
