@@ -41,9 +41,20 @@ public class DashboardPanel extends JPanel {
     centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
     centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
-    JLabel welcome = new JLabel("WELCOME!");
-    welcome.setFont(new Font("Monospaced", Font.PLAIN, 40));
+    //We love you mel
+    JLabel welcome = new JLabel("WELCOME TO OUR PROJECT!");
+    welcome.setFont(new Font("Papyrus", Font.PLAIN, 35));
     welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
+    try { // Add Image
+      ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("hisnameislogo.png"));
+      Image scaled = icon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+      JLabel logoLabel = new JLabel(new ImageIcon(scaled));
+      logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+      centerPanel.add(logoLabel);
+      centerPanel.add(Box.createVerticalStrut(20));
+    } catch (Exception e) {
+      // image not found, just skip it
+    }
     centerPanel.add(welcome);
 
     centerPanel.add(Box.createVerticalStrut(50));
