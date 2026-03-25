@@ -25,6 +25,7 @@ public class AddStudentPanel extends JPanel {
   private JTextField nameField;
   private JTextField ageField;
 
+
   public AddStudentPanel() {
     setLayout(new BorderLayout());
 
@@ -95,6 +96,7 @@ public class AddStudentPanel extends JPanel {
     String name = nameField.getText().trim();
     String ageText = ageField.getText().trim();
 
+
     // Basic validation
     if (id.isEmpty() || name.isEmpty() || ageText.isEmpty()) {
       JOptionPane.showMessageDialog(this,
@@ -118,10 +120,10 @@ public class AddStudentPanel extends JPanel {
       return;
     }
 
-    DataStore.getInstance().addStudent(new Student(id, name, age));
-    JOptionPane.showMessageDialog(this,
-        "Student added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-    clearFields();
+//    DataStore.getInstance().addStudent(new Student(id, name, age));
+//    JOptionPane.showMessageDialog(this,
+//        "Student added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+//    clearFields();
   }
 
   private void clearFields() {
