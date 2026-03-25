@@ -67,6 +67,8 @@ public class ViewStudentsPanel extends JPanel {
     table.setRowHeight(25);
     table.getTableHeader().setReorderingAllowed(false);
 
+    table.setAutoCreateRowSorter(true);
+
 
     JScrollPane scrollPane = new JScrollPane(table);
     scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
