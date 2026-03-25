@@ -37,13 +37,14 @@ public class EditStudentPanel extends JPanel {
     add(title, BorderLayout.NORTH);
 
     // Table
-    String[] columns = { "Student ID", "Name", "Age" };
-    tableModel = new DefaultTableModel(columns, 0) {
-      @Override
-      public boolean isCellEditable(int row, int column) {
-        return false;
-      }
-    };
+      String[] columns = { "Student ID", "Name", "Age", "Email", "Course", "Year Level", "Contact" };
+      tableModel = new DefaultTableModel(columns, 0) {
+          @Override
+          public boolean isCellEditable(int row, int column) {
+              return false; // Read-only table
+          }
+      };
+
     table = new JTable(tableModel) {
         @Override
         public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
@@ -115,9 +116,17 @@ public class EditStudentPanel extends JPanel {
   private void loadData() {
     tableModel.setRowCount(0);
     List<Student> students = DataStore.getInstance().getAllStudents();
-    for (Student s : students) {
-      tableModel.addRow(s.toTableRow());
-    }
+      for (Student s : students) {
+          tableModel.addRow(new Object[] {
+                  s.getId(),
+                  s.getName(),
+                  s.getAge(),
+                  s.getEmail(),
+                  s.getCourse(),
+                  s.getYearLvl(),
+                  s.getContactNum()
+          });
+      }
     clearFields();
   }
 
