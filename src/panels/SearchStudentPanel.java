@@ -24,11 +24,9 @@ import java.util.ArrayList;
  */
 public class SearchStudentPanel extends JPanel {
   private JTextField searchField;
-  private JTextArea resultArea;
   private DefaultTableModel tableModel;
   private JTable table;
-  private List<Student> results;
-
+  private List<Student> results = new ArrayList<>();
 
   public SearchStudentPanel() {
     setLayout(new BorderLayout());
