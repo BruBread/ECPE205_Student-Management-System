@@ -16,13 +16,13 @@ import java.awt.*;
  * 
  * TODO for Student 2:
  * - Customize the look and feel (colors, fonts, window size)
- * - Add a menu bar if desired (File > Exit, Help > About)
+ * - Add a menu bar if desired (File > Exit, Help > About)-
  * - Add an application icon
  * - Improve the overall layout and styling
  */
 public class MainFrame extends JFrame {
 
-  public MainFrame() {
+    public MainFrame() {
     setTitle("Student Management System");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(800, 600);
@@ -31,6 +31,10 @@ public class MainFrame extends JFrame {
 
     // --- Tabbed Pane: each tab is owned by a different student ---
     JTabbedPane tabbedPane = new JTabbedPane();
+    JMenuBar menuBar = new JMenuBar();
+
+    JPanel menuPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
+    menuPanel.setOpaque(false);
 
     tabbedPane.addTab("Dashboard", new DashboardPanel());
     tabbedPane.addTab("Add Student", new AddStudentPanel());
@@ -38,6 +42,22 @@ public class MainFrame extends JFrame {
     tabbedPane.addTab("Search Student", new SearchStudentPanel());
     tabbedPane.addTab("Edit / Delete", new EditStudentPanel());
 
+    JMenu file = new JMenu("File");
+    JMenu help = new JMenu("Help");
+
+    JMenuItem exit = new JMenuItem("Exit");
+    JMenuItem about = new JMenuItem("About");
+
+    file.add(exit);
+    help.add(about);
+
+    file.addSeparator();
+    help.addSeparator();
+    menuBar.add(file);
+    menuBar.add(help);
+    menuBar.add(menuPanel);
+
+    setJMenuBar(menuBar);
     add(tabbedPane, BorderLayout.CENTER);
   }
 
